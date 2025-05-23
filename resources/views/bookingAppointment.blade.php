@@ -14,6 +14,13 @@
 <body>
     <x-navbar />
 
+    <div class="services-header">
+        <div class="container">
+            <h1 class="services-title">Book Your Appointment</h1>
+            <p class="services-subtitle">Hello, Testing! Let’s get you booked for your next appointment.</p>
+        </div>
+    </div>
+   
     <x-footer />
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-..."
