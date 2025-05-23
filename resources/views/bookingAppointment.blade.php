@@ -14,10 +14,10 @@
 <body>
     <x-navbar />
 
-    <div class="services-header">
+    <div class="booking-header">
         <div class="container">
-            <h1 class="services-title">Book Your Appointment</h1>
-            <p class="services-subtitle">Hello, Testing! Let’s get you booked for your next appointment.</p>
+            <h1 class="booking-title">Book Your Appointment</h1>
+            <p class="booking-subtitle">Hello, Testing! Let’s get you booked for your next appointment.</p>
         </div>
     </div>
    
