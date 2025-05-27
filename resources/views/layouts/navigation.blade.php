@@ -17,6 +17,20 @@
                         : request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @if (Auth::user()->usertype == 'admin')
+                        <x-nav-link :href="route('admin.manageHairstyle')" :active="request()->routeIs('admin.manageHairstyle')">
+                            {{ __('Manage Hairstyle') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.manageBooking')" :active="request()->routeIs('admin.manageBooking')">
+                            {{ __('Manage Booking') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.manageService')" :active="request()->routeIs('admin.manageService')">
+                            {{ __('Manage Service') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.manageMembership')" :active="request()->routeIs('admin.manageMem')">
+                            {{ __('Manage Membership') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -80,6 +94,20 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @if (Auth::user()->usertype == 'admin')
+                <x-responsive-nav-link :href="route('admin.manageHairstyle')" :active="request()->routeIs('admin.manageHairstyle')">
+                    {{ __('Manage Hairstyle') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.manageBooking')" :active="request()->routeIs('admin.manageBooking')">
+                    {{ __('Manage Booking') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.manageService')" :active="request()->routeIs('admin.manageService')">
+                    {{ __('Manage Service') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.manageMembership')" :active="request()->routeIs('admin.manageMembership')">
+                    {{ __('Manage Membership') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

@@ -50,6 +50,10 @@ Route::middleware(['auth', 'userMiddleware'])->group(function () {
 // admin routes
 Route::middleware(['auth', 'adminMiddleware'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/manageHairstyle', [AdminController::class, 'manageHairstyle'])->name('admin.manageHairstyle');
+    Route::get('/admin/manageBooking', [AdminController::class, 'manageBooking'])->name('admin.manageBooking');
+    Route::get('/admin/manageService', [AdminController::class, 'manageService'])->name('admin.manageService');
+    Route::get('/admin/manageMembership', [AdminController::class, 'manageMembership'])->name('admin.manageMembership');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
