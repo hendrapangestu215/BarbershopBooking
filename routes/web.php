@@ -22,6 +22,18 @@ Route::get('/booking', function () {
     return view('bookingAppointment');
 });
 
+Route::get('/booking-step-two', function () {
+    return view('bookingAppointmentsteptwo');
+});
+
+Route::get('/booking-step-three', function () {
+    return view('bookingAppointmentstepthree');
+});
+
+Route::get('/booking-step-four', function () {
+    return view('bookingAppointmentstepfour');
+});
+
 Route::get('/membership', function () {
     return view('membership');
 });
