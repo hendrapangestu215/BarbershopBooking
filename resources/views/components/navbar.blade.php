@@ -43,9 +43,34 @@
             </ul>
 
             <div class="d-flex">
-                <a href="/login" class="btn btn-link text-dark text-decoration-none me-2">Sign In</a>
-                <a href="/register" class="btn btn-dark rounded-1 px-3">Sign Up</a>
+                @auth
+                    <!-- User is logged in -->
+                    <div class="dropdown">
+                        <button class="btn btn-link text-dark dropdown-toggle text-decoration-none" type="button"
+                            id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ Auth::user()->name }}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            @if (Auth::user()->usertype == 'admin')
+                                <li><a class="dropdown-item" href="/admin/dashboard">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                            @endif
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @else
+                    <!-- Guest user -->
+                    <a href="/login" class="btn btn-link text-dark text-decoration-none me-2">Sign In</a>
+                    <a href="/register" class="btn btn-dark rounded-1 px-3">Sign Up</a>
+                @endauth
             </div>
         </div>
-    </div>
 </nav>
