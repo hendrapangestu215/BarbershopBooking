@@ -14,6 +14,28 @@
 <body>
     <x-navbar />
 
+    <!-- Success message alert -->
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if (session('info'))
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ session('info') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <div class="membership-header">
         <div class="container">
             <h1 class="membership-title">Membership</h1>
@@ -68,9 +90,44 @@
         </div>
 
         <div class="join-btn-container">
-            <a href="/login" class="btn join-btn">Join Membership</a>
+            @guest
+                <a href="{{ route('login') }}" class="btn join-btn">Login to Join Membership</a>
+            @else
+                @if (Auth::user()->hasMembership())
+                    <button class="btn join-btn already-member" disabled>Already a Member</button>
+                @else
+                    <button class="btn join-btn" data-bs-toggle="modal" data-bs-target="#joinMembershipModal">Join
+                        Membership</button>
+                @endif
+            @endguest
         </div>
     </div>
+
+    <!-- Membership Confirmation Modal -->
+    @auth
+        <div class="modal fade" id="joinMembershipModal" tabindex="-1" aria-labelledby="joinMembershipModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="joinMembershipModalLabel">Join Membership</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to join our membership program?</p>
+                        <p>You will get access to all our exclusive membership benefits!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <form id="joinMembershipForm" method="POST" action="{{ route('membership.join') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Yes, Join Now</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endauth
 
     <x-footer />
 

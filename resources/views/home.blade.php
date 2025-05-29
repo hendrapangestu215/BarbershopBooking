@@ -269,74 +269,52 @@
             <p class="text-center text-muted mb-5">Get inspired by our most popular styles</p>
 
             <div class="row">
-                <div class="col-md-3 mb-4">
-                    <div class="hairstyle-card h-100">
-                        <div class="hairstyle-image">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#adb5bd"
-                                class="bi bi-image" viewBox="0 0 16 16">
-                                <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path>
-                                <path
-                                    d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="hairstyle-content p-3">
-                            <h5 class="hairstyle-name">Modern Fade</h5>
-                            <div class="rating text-warning">★★★★★ <span class="text-muted">4.9</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="hairstyle-card h-100">
-                        <div class="hairstyle-image">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#adb5bd"
-                                class="bi bi-image" viewBox="0 0 16 16">
-                                <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path>
-                                <path
-                                    d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="hairstyle-content p-3">
-                            <h5 class="hairstyle-name">Classic Pompadour</h5>
-                            <div class="rating text-warning">★★★★☆ <span class="text-muted">4.7</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="hairstyle-card h-100">
-                        <div class="hairstyle-image">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#adb5bd"
-                                class="bi bi-image" viewBox="0 0 16 16">
-                                <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path>
-                                <path
-                                    d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="hairstyle-content p-3">
-                            <h5 class="hairstyle-name">Textured Crop</h5>
-                            <div class="rating text-warning">★★★★★ <span class="text-muted">4.8</span></div>
+                @foreach ($featuredHairstyles as $hairstyle)
+                    <div class="col-md-3 mb-4">
+                        <div class="hairstyle-card h-100">
+                            <div class="hairstyle-image">
+                                @if ($hairstyle->image)
+                                    <img src="{{ asset('storage/' . $hairstyle->image) }}"
+                                        alt="{{ $hairstyle->name }}" class="img-fluid">
+                                @else
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        fill="#adb5bd" class="bi bi-image" viewBox="0 0 16 16">
+                                        <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path>
+                                        <path
+                                            d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z">
+                                        </path>
+                                    </svg>
+                                @endif
+                            </div>
+                            <div class="hairstyle-content p-3">
+                                <h5 class="hairstyle-name">{{ $hairstyle->name }}</h5>
+                                <p class="text-start text-muted small">{{ Str::limit($hairstyle->description, 60) }}
+                                </p>
+                                <div class="rating text-warning">
+                                    @php
+                                        $fullStars = floor($hairstyle->rating);
+                                        $hasHalfStar = $hairstyle->rating - $fullStars >= 0.5;
+                                        $emptyStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
+                                    @endphp
+
+                                    @for ($i = 0; $i < $fullStars; $i++)
+                                        ★
+                                    @endfor
+
+                                    @if ($hasHalfStar)
+                                        ☆
+                                    @endif
+
+                                    @for ($i = 0; $i < $emptyStars; $i++)
+                                        ☆
+                                    @endfor
+
+                                    <span class="text-muted">{{ $hairstyle->rating }}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="hairstyle-card h-100">
-                        <div class="hairstyle-image">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#adb5bd"
-                                class="bi bi-image" viewBox="0 0 16 16">
-                                <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path>
-                                <path
-                                    d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="hairstyle-content p-3">
-                            <h5 class="hairstyle-name">Slick Back</h5>
-                            <div class="rating text-warning">★★★★☆ <span class="text-muted">4.6</span></div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
             <div class="text-center mt-4">
