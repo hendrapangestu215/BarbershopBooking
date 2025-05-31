@@ -101,7 +101,6 @@ class MembershipController extends Controller
     public function update(Request $request, Membership $membership)
     {
         $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
             'role' => 'required|string|max:255',
             'status' => 'required|string|max:255',
             'join_date' => 'required|date',

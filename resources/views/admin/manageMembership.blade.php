@@ -210,19 +210,14 @@
                     @csrf
                     @method('PUT')
                     <input type="hidden" id="edit_membership_id" name="membership_id">
+                    <input type="hidden" id="edit_user_id" name="user_id">
 
                     <div class="mb-4">
-                        <label for="edit_user_id"
+                        <label for="edit_user_display"
                             class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">User</label>
-                        <select id="edit_user_id" name="user_id"
-                            class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                            required>
-                            <option value="">Select a user</option>
-                            @foreach ($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})
-                                </option>
-                            @endforeach
-                        </select>
+                        <input type="text" id="edit_user_display"
+                            class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 bg-gray-100"
+                            disabled readonly>
                     </div>
 
                     <div class="mb-4">
@@ -346,6 +341,15 @@
                                 // Populate form
                                 document.getElementById('edit_membership_id').value = data.id;
                                 document.getElementById('edit_user_id').value = data.user_id;
+
+                                // Find the user in the table to display their name
+                                const userName = document.querySelector(
+                                        `[data-membership-id="${data.id}"]`)
+                                    .closest('tr')
+                                    .querySelector('td:first-child')
+                                    .textContent;
+
+                                document.getElementById('edit_user_display').value = userName;
                                 document.getElementById('edit_role').value = data.role;
                                 document.getElementById('edit_status').value = data.status;
                                 document.getElementById('edit_join_date').value = data.join_date;
