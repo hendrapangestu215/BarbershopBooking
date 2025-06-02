@@ -327,7 +327,7 @@
                         const hairstyleId = this.dataset.hairstyleId;
 
                         // Fetch hairstyle data
-                        fetch(`/admin/hairstyle/${hairstyleId}/edit`)
+                        fetch(`{{ url('/hairstyle') }}/${hairstyleId}/edit`)
                             .then(response => response.json())
                             .then(data => {
                                 // Populate form
@@ -344,7 +344,7 @@
                                 }
 
                                 // Update form action URL
-                                editHairstyleForm.action = `/admin/hairstyle/${data.id}`;
+                                editHairstyleForm.action = `{{ url('/hairstyle') }}/${data.id}`;
 
                                 // Show modal
                                 editHairstyleModal.classList.remove('hidden');
@@ -370,7 +370,7 @@
                 document.querySelectorAll('.delete-hairstyle-btn').forEach(button => {
                     button.addEventListener('click', function() {
                         const hairstyleId = this.dataset.hairstyleId;
-                        deleteHairstyleForm.action = `/admin/hairstyle/${hairstyleId}`;
+                        deleteHairstyleForm.action = `{{ url('/hairstyle') }}/${hairstyleId}`;
                         deleteHairstyleModal.classList.remove('hidden');
                     });
                 });

@@ -10,20 +10,11 @@ class MembershipController extends Controller
 {
     public function index()
     {
-        // Check if user is authenticated manually
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
         return view('membership');
     }
 
     public function join(Request $request)
     {
-        // Check if user is authenticated manually
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
-
         // Check if user already has membership
         $existingMembership = Membership::where('user_id', Auth::id())->first();
 

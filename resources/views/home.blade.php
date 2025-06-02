@@ -112,141 +112,37 @@
             <p class="service-subtitle text-center">We offer a wide range of premium barbering services.</p>
 
             <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card service-card h-100 d-flex flex-column">
-                        <div class="service-content flex-grow-1">
-                            <h4 class="fw-bold">Classic Haircut</h4>
-                            <p class="text-muted small">Traditional haircut to keep you looking clean.</p>
-                            <div class="service-price">$25</div>
-                            <div class="service-time">30 minutes</div>
-                            <div class="service-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-check mr-2 h-4 w-4 text-black">
-                                    <path d="M20 6 9 17l-5-5"></path>
-                                </svg>
-                                <span>Consultation</span>
+                @foreach ($services as $service)
+                    <div class="col-md-4 mb-4">
+                        <div class="card service-card h-100 d-flex flex-column">
+                            <div class="service-content flex-grow-1">
+                                <h4 class="fw-bold">{{ $service->name }}</h4>
+                                <p class="text-muted small">{{ $service->description }}</p>
+                                <div class="service-price">${{ $service->price }}</div>
+                                <div class="service-time">{{ $service->duration }} minutes</div>
+
+                                @if (is_array($service->featured))
+                                    @foreach ($service->featured as $feature)
+                                        <div class="service-item">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                class="lucide lucide-check mr-2 h-4 w-4 text-black">
+                                                <path d="M20 6 9 17l-5-5"></path>
+                                            </svg>
+                                            <span>{{ $feature }}</span>
+                                        </div>
+                                    @endforeach
+                                @endif
                             </div>
-                            <div class="service-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-check mr-2 h-4 w-4 text-black">
-                                    <path d="M20 6 9 17l-5-5"></path>
-                                </svg>
-                                <span>Shampoo</span>
+                            <div class="service-footer mt-3">
+                                <a href="/booking" class="w-100">
+                                    <button class="book-now-btn rounded w-100">Book Now</button>
+                                </a>
                             </div>
-                            <div class="service-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-check mr-2 h-4 w-4 text-black">
-                                    <path d="M20 6 9 17l-5-5"></path>
-                                </svg>
-                                <span>Styling</span>
-                            </div>
-                        </div>
-                        <div class="service-footer mt-3">
-                            <a href="/booking" class="w-100">
-                                <button class="book-now-btn rounded w-100">Book Now</button>
-                            </a>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card service-card h-100 d-flex flex-column">
-                        <div class="service-content flex-grow-1">
-                            <h4 class="fw-bold">Beard Trim</h4>
-                            <p class="text-muted small">Keep your beard looking neat and fresh.</p>
-                            <div class="service-price">$15</div>
-                            <div class="service-time">20 minutes</div>
-                            <div class="service-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-check mr-2 h-4 w-4 text-black">
-                                    <path d="M20 6 9 17l-5-5"></path>
-                                </svg>
-                                <span>Beard Wash</span>
-                            </div>
-                            <div class="service-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-check mr-2 h-4 w-4 text-black">
-                                    <path d="M20 6 9 17l-5-5"></path>
-                                </svg>
-                                <span>Hot Towel</span>
-                            </div>
-                            <div class="service-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-check mr-2 h-4 w-4 text-black">
-                                    <path d="M20 6 9 17l-5-5"></path>
-                                </svg>
-                                <span>Beard Oil</span>
-                            </div>
-                        </div>
-                        <div class="service-footer mt-3">
-                            <a href="/booking" class="w-100">
-                                <button class="book-now-btn rounded w-100">Book Now</button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card service-card h-100 d-flex flex-column">
-                        <div class="service-content flex-grow-1">
-                            <h4 class="fw-bold">Premium Package</h4>
-                            <p class="text-muted small">Complete grooming experience.</p>
-                            <div class="service-price">$45</div>
-                            <div class="service-time">60 minutes</div>
-                            <div class="service-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-check mr-2 h-4 w-4 text-black">
-                                    <path d="M20 6 9 17l-5-5"></path>
-                                </svg>
-                                <span>Haircut</span>
-                            </div>
-                            <div class="service-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-check mr-2 h-4 w-4 text-black">
-                                    <path d="M20 6 9 17l-5-5"></path>
-                                </svg>
-                                <span>Beard Trim</span>
-                            </div>
-                            <div class="service-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-check mr-2 h-4 w-4 text-black">
-                                    <path d="M20 6 9 17l-5-5"></path>
-                                </svg>
-                                <span>Hot Towel Treatment</span>
-                            </div>
-                            <div class="service-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-check mr-2 h-4 w-4 text-black">
-                                    <path d="M20 6 9 17l-5-5"></path>
-                                </svg>
-                                <span>Face Massage</span>
-                            </div>
-                        </div>
-                        <div class="service-footer mt-3">
-                            <a href="/booking" class="w-100">
-                                <button class="book-now-btn rounded w-100">Book Now</button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
             <div class="text-center">

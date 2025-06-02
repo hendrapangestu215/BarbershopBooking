@@ -335,7 +335,7 @@
                         const membershipId = this.dataset.membershipId;
 
                         // Fetch membership data
-                        fetch(`/admin/membership/${membershipId}/edit-data`)
+                        fetch(`{{ url('/membership') }}/${membershipId}/edit-data`)
                             .then(response => response.json())
                             .then(data => {
                                 // Populate form
@@ -355,7 +355,7 @@
                                 document.getElementById('edit_join_date').value = data.join_date;
 
                                 // Update form action URL
-                                editMembershipForm.action = `/admin/membership/${data.id}`;
+                                editMembershipForm.action = `{{ url('/membership') }}/${data.id}`;
 
                                 // Show modal
                                 editMembershipModal.classList.remove('hidden');
@@ -370,7 +370,7 @@
                 document.querySelectorAll('.delete-membership-btn').forEach(button => {
                     button.addEventListener('click', function() {
                         const membershipId = this.dataset.membershipId;
-                        deleteMembershipForm.action = `/admin/membership/${membershipId}`;
+                        deleteMembershipForm.action = `{{ url('/membership') }}/${membershipId}`;
                         deleteMembershipModal.classList.remove('hidden');
                     });
                 });
