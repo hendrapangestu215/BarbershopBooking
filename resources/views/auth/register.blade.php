@@ -96,12 +96,13 @@
 
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone Number</label>
-                    <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone"
-                        name="phone" value="{{ old('phone') }}" required>
+                    <input type="tel" class="form-control @error('phone') is-invalid @enderror" id="phone"
+                        name="phone" value="{{ old('phone') }}" required pattern="[0-9]+"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')" title="Please enter numbers only">
                     @error('phone')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
                     @enderror
                 </div>
 

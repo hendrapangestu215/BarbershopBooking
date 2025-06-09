@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             HairstyleSeeder::class,
             ServiceSeeder::class,
+            BarberSeeder::class,
         ]);
     }
 }

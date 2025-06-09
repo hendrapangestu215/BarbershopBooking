@@ -17,120 +17,115 @@
     <div class="booking-header">
         <div class="container">
             <h1 class="booking-title">Book Your Appointment</h1>
-            <p class="booking-subtitle">Hello, Testing! Let’s get you booked for your next appointment.</p>
+            <p class="booking-subtitle">Hello, {{ Auth::check() ? Auth::user()->name : 'Guest' }}! Let's get you booked
+                for your next appointment.</p>
         </div>
     </div>
-    
+
     <div class="container">
-    <div class="steps">
-        <div class="step">
-            <div class="circle active">1</div>
+        <div class="steps">
+            <div class="step">
+                <div class="circle active">1</div>
                 <span class="step-by-step">Service</span>
-        </div>
-        <div class="line"></div>
-        <div class="step">
-            <div class="circle">2</div>
+            </div>
+            <div class="line"></div>
+            <div class="step">
+                <div class="circle">2</div>
                 <span class="step-by-step">Hairstyle</span>
-        </div>
-        <div class="line"></div>
-        <div class="step">
-            <div class="circle">3</div>
+            </div>
+            <div class="line"></div>
+            <div class="step">
+                <div class="circle">3</div>
                 <span class="step-by-step">Date & Time</span>
             </div>
-        <div class="line"></div>
-        <div class="step">
-            <div class="circle">4</div>
+            <div class="line"></div>
+            <div class="step">
+                <div class="circle">4</div>
                 <span class="step-by-step">Confirm</span>
+            </div>
         </div>
+
+        <form id="booking-form" action="{{ route('booking.store-step-one') }}" method="POST">
+            @csrf
+            <div class="container-three">
+                <div class="selection">
+                    <h2>Select Service</h2>
+                    <p>Select the service you'd like to book</p>
+                </div>
+                <div class="list-services row">
+                    @foreach ($services as $service)
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="card-booking" onclick="selectService('{{ $service->id }}')">
+                                <div class="select-service">
+                                    <p class="service-tit">{{ $service->name }}</p>
+                                    <p class="service-desc">{{ $service->description }}</p>
+                                    <div class="info">
+                                        <span class="price">${{ $service->price }}</span>
+                                        <span class="duration">🕒 {{ $service->duration }} min</span>
+                                    </div>
+                                </div>
+                                <input type="radio" name="service_id" value="{{ $service->id }}"
+                                    id="service-{{ $service->id }}" class="service-radio" style="display: none;">
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="barber-section">
+                    <h3>Barber (Optional)</h3>
+                    <div class="barber-options">
+                        @foreach ($barbers as $barber)
+                            <div class="barber-option">
+                                <input type="radio" name="barber_id" id="barber-{{ $barber->id }}"
+                                    value="{{ $barber->id }}">
+                                <label for="barber-{{ $barber->id }}">{{ $barber->name }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+                    <p class="barber-helper">Leave unselected if you don't have a preference</p>
+                </div>
+
+                <div class="button-container">
+                    <button type="submit" class="next-button">Next</button>
+                </div>
+            </div>
+        </form>
+
+        <x-footer />
+
+        <script>
+            function selectService(serviceId) {
+                // Remove active class from all services
+                document.querySelectorAll('.card-booking').forEach(card => {
+                    card.classList.remove('active');
+                });
+
+                // Add active class to selected service
+                const selectedCard = document.querySelector(`#service-${serviceId}`).closest('.card-booking');
+                selectedCard.classList.add('active');
+
+                // Check the radio button
+                document.querySelector(`#service-${serviceId}`).checked = true;
+            }
+
+            // Check if there's a previously selected service
+            document.addEventListener('DOMContentLoaded', function() {
+                const selectedService = "{{ session('booking.service_id') ?? '' }}";
+                if (selectedService) {
+                    selectService(selectedService);
+                }
+
+                // Check if there's a previously selected barber
+                const selectedBarber = "{{ session('booking.barber_id') ?? '' }}";
+                if (selectedBarber) {
+                    document.querySelector(`#barber-${selectedBarber}`).checked = true;
+                }
+            });
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-..."
+            crossorigin="anonymous"></script>
     </div>
-
-        <div class="container-three">
-        <div class="selection">
-            <h2>Select Service</h2>
-            <p>Select the service you’d like to book</p>
-        </div>
-    <div class="list-services">
-        <div class="card-booking">
-            <div class="image-booking"></div>
-                <div class="select-service">
-                <p class="service-tit">Classic Haircut</p>
-                <p class="service-desc">Traditional haircut with clippers and scissors</p>
-            <div class="info">
-                <span class="price">$25</span>
-                <span class="duration">🕒 30 min</span>
-            </div>
-            </div>
-            </div>
-
-        <div class="card-booking">
-            <div class="image-booking"></div>
-            <div class="select-service">
-                <p class="service-tit">Beard Trim</p>
-                <p class="service-desc">Shape and trim your beard to perfection</p>
-            <div class="info">
-                <span class="price">$15</span>
-                <span class="duration">🕒 20 min</span>
-            </div>
-        </div>
-        </div>
-
-        <div class="card-booking">
-            <div class="image-booking"></div>
-            <div class="select-service">
-                <p class="service-tit">Premium Package</p>
-                <p class="service-desc">Complete grooming experience with haircut and beard trim</p>
-            <div class="info">
-                <span class="price">$45</span>
-                <span class="duration">🕒 60 min</span>
-            </div>
-        </div>
-        </div>
-
-        <div class="card-booking">
-            <div class="image-booking"></div>
-            <div class="select-service">
-                <p class="service-tit">Kids Haircut</p>
-                <p class="service-desc">Haircut for children under 12 year old</p>
-            <div class="info">
-                <span class="price">$20</span>
-                <span class="duration">🕒 25 min</span>
-            </div>  
-            </div>
-            </div>
-        
-        <div class="card-booking">
-            <div class="image-booking"></div>
-            <div class="select-service">
-                <p class="service-tit">Hot Towel Shave</p>
-                <p class="service-desc">Traditional straight razor shave with hot towel</p>
-            <div class="info">
-                <span class="price">$30</span>
-                <span class="duration">🕒 30 min</span>
-            </div>
-            </div>
-            </div>
-
-        <div class="card-booking">
-            <div class="image-booking"></div>
-            <div class="select-service">
-                <p class="service-tit">Hair Coloring</p>
-                <p class="service-desc">Professional hair coloring service</p>
-            <div class="info">
-                <span class="price">$60</span>
-                <span class="duration">🕒 90 min</span>
-            </div>
-            </div>
-            </div>
-</div>
-
-        <div class="button-container">
-        <a href="/booking-step-two" class="next-button">Next</a>
-</div>
-</div>
-    <x-footer />
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-..."
-        crossorigin="anonymous"></script>
 </body>
 
 </html>

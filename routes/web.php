@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\BookingController;
+use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\HairstyleController;
 use App\Http\Controllers\Admin\MembershipController as AdminMembershipController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\HairstyleCatalogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MembershipController;
@@ -25,20 +26,23 @@ Route::get('/services', [ServiceController::class, 'index'])->name('services');
 
 Route::get('/hairstyles', [HairstyleCatalogController::class, 'index'])->name('hairstyle.catalog');
 
-Route::get('/booking', function () {
-    return view('bookingAppointment');
-});
+Route::middleware(['auth'])->group(function () {
+    Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');
+    Route::post('/booking', [BookingController::class, 'storeStepOne'])->name('booking.store-step-one');
 
-Route::get('/booking-step-two', function () {
-    return view('bookingAppointmentsteptwo');
-});
+    Route::get('/booking-step-two', [BookingController::class, 'stepTwo'])->name('booking.step-two');
+    Route::post('/booking-step-two', [BookingController::class, 'storeStepTwo'])->name('booking.store-step-two');
 
-Route::get('/booking-step-three', function () {
-    return view('bookingAppointmentstepthree');
-});
+    Route::get('/booking-step-three', [BookingController::class, 'stepThree'])->name('booking.step-three');
+    Route::post('/booking-step-three', [BookingController::class, 'storeStepThree'])->name('booking.store-step-three');
 
-Route::get('/booking-step-four', function () {
-    return view('bookingAppointmentstepfour');
+    Route::get('/booking-step-four', [BookingController::class, 'stepFour'])->name('booking.step-four');
+    Route::post('/booking-confirm', [BookingController::class, 'confirm'])->name('booking.confirm');
+
+    Route::get('/bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
+
+    Route::post('/booking/confirm', [BookingController::class, 'confirm'])->name('booking.confirm');
+    Route::get('/booking/success/{id}', [BookingController::class, 'success'])->name('booking.success');
 });
 
 Route::get('/membership', [MembershipController::class, 'index'])->name('membership');
@@ -92,11 +96,11 @@ Route::middleware(['auth', 'adminMiddleware'])->group(function () {
         ->name('admin.hairstyle.destroy');
 
     // admin manageBooking
-    Route::get('/manageBooking', [BookingController::class, 'index'])->name('admin.manageBooking');
-    Route::post('/bookings', [BookingController::class, 'store'])->name('admin.bookings.store');
-    Route::get('/bookings/{booking}/edit', [BookingController::class, 'edit'])->name('admin.bookings.edit');
-    Route::put('/bookings/{booking}', [BookingController::class, 'update'])->name('admin.bookings.update');
-    Route::delete('/bookings/{booking}', [BookingController::class, 'destroy'])->name('admin.bookings.destroy');
+    Route::get('/manageBooking', [AdminBookingController::class, 'index'])->name('admin.manageBooking');
+    Route::post('/bookings', [AdminBookingController::class, 'store'])->name('admin.bookings.store');
+    Route::get('/bookings/{booking}/edit', [AdminBookingController::class, 'edit'])->name('admin.bookings.edit');
+    Route::put('/bookings/{booking}', [AdminBookingController::class, 'update'])->name('admin.bookings.update');
+    Route::delete('/bookings/{booking}', [AdminBookingController::class, 'destroy'])->name('admin.bookings.destroy');
 
     // admin manageService
     Route::get('/manageService', [AdminServiceController::class, 'index'])->name('admin.manageService');
