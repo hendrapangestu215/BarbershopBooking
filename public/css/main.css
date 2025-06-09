@@ -1326,6 +1326,12 @@ li.nav-item {
     }
 }
 
+@media (max-width: 767px) {
+    .desktop-only {
+        display: none !important;
+    }
+}
+
 @media (max-width: 576px) {
     .hairstyles-grid .row {
         margin: 0 -5px;
@@ -1350,6 +1356,19 @@ li.nav-item {
     .button-hairstyle-container {
         flex-direction: column;
         gap: 15px;
+    }
+
+    .phone-number {
+        font-size: 0.9rem;
+    }
+
+    .booking-detail-row {
+        flex-direction: column;
+    }
+
+    .booking-detail-row div {
+        width: 100%;
+        margin-bottom: 5px;
     }
 
     .back-button,
@@ -1378,6 +1397,10 @@ li.nav-item {
 
     .time-section {
         flex: 2;
+    }
+
+    .mobile-only {
+        display: none !important;
     }
 }
 
@@ -1636,4 +1659,31 @@ input[type="date"],select {
 
 .notification-booking p {
     color: #555;
+}
+
+.phone-number {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    display: inline-block;
+}
+
+.mobile-modal-content {
+    width: 95%;
+    padding: 15px;
+}
+
+.mobile-booking-item {
+    border-bottom: 1px solid #eee;
+    padding: 8px 0;
+}
+
+.mobile-label {
+    font-weight: normal;
+    margin-bottom: 3px;
+}
+
+.mobile-value {
+    font-weight: bold;
+    word-break: break-word;
 }
