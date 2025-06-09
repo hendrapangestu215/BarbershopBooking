@@ -70,7 +70,7 @@
                     </div>
                     <div class="item">
                         <div class="item-title">Date</div>
-                        <div class="item-value">{{ date('j F Y', strtotime($booking->date)) }}</div>
+                        <div class="item-value">{{ date('j F Y', strtotime($booking->booking_date)) }}</div>
                     </div>
                 </div>
 
@@ -81,7 +81,7 @@
                     </div>
                     <div class="item">
                         <div class="item-title">Time</div>
-                        <div class="item-value">{{ $booking->time }}</div>
+                        <div class="item-value">{{ $booking->booking_time }}</div>
                     </div>
                 </div>
             </div>
@@ -135,7 +135,7 @@
 
             <div class="confirmation-details">
                 <h3>Booking Details</h3>
-                <div class="booking-id">Booking ID: BK-{{ str_pad($booking->id, 4, '0', STR_PAD_LEFT) }}</div>
+                <div class="booking-id">Booking ID: BK-{{ str_pad($booking->booking_id, 4, '0', STR_PAD_LEFT) }}</div>
 
                 <div class="booking-detail-row">
                     <div>Service</div>
@@ -160,8 +160,8 @@
                     <div>Time</div>
                 </div>
                 <div class="booking-detail-row">
-                    <div><strong>{{ date('j F Y', strtotime($booking->date)) }}</strong></div>
-                    <div><strong>{{ $booking->time }}</strong></div>
+                    <div><strong>{{ date('j F Y', strtotime($booking->booking_date)) }}</strong></div>
+                    <div><strong>{{ $booking->booking_time }}</strong></div>
                 </div>
 
                 <div class="customer-details">

@@ -103,6 +103,10 @@ class BookingController extends Controller
         $booking->booking_date = session('booking.booking_date');
         $booking->booking_time = session('booking.booking_time');
 
+        // Get the latest booking ID and add 1 for the preview
+        $lastBookingId = Booking::max('id') ?? 0;
+        $booking->booking_id = $lastBookingId + 1;
+
         return view('bookingAppointmentstepfour', compact('service', 'hairstyle', 'barber', 'booking'));
     }
 
