@@ -1312,6 +1312,12 @@ li.nav-item {
 }
 
 /* Media Queries for Responsiveness */
+@media (max-width: 991.98px) {
+    .dropdown-menu.dropdown-menu-end {
+        right: auto;
+    }
+}
+
 @media (max-width: 768px) {
     .hairstyles-image {
         height: 180px;
