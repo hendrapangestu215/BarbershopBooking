@@ -19,6 +19,11 @@ class Service extends Model
 
     protected $casts = [
         'featured' => 'array',
-        'price' => 'float',
+        'price' => 'integer',
     ];
+
+    public function getFormattedPriceAttribute()
+    {
+        return 'Rp' . number_format($this->price, 0, ',', '.');
+    }
 }

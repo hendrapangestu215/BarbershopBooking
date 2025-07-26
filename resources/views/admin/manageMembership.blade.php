@@ -335,8 +335,13 @@
                         const membershipId = this.dataset.membershipId;
 
                         // Fetch membership data
-                        fetch(`{{ url('/membership') }}/${membershipId}/edit-data`)
-                            .then(response => response.json())
+                        fetch(`${window.location.origin}/membership/${membershipId}/edit-data`)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`HTTP error! Status: ${response.status}`);
+                                }
+                                return response.json();
+                            })
                             .then(data => {
                                 // Populate form
                                 document.getElementById('edit_membership_id').value = data.id;
@@ -355,13 +360,15 @@
                                 document.getElementById('edit_join_date').value = data.join_date;
 
                                 // Update form action URL
-                                editMembershipForm.action = `{{ url('/membership') }}/${data.id}`;
+                                editMembershipForm.action =
+                                    `${window.location.origin}/membership/${data.id}`;
 
                                 // Show modal
                                 editMembershipModal.classList.remove('hidden');
                             })
                             .catch(error => {
                                 console.error('Error fetching membership data:', error);
+                                alert('Failed to fetch membership data: ' + error.message);
                             });
                     });
                 });
@@ -370,7 +377,8 @@
                 document.querySelectorAll('.delete-membership-btn').forEach(button => {
                     button.addEventListener('click', function() {
                         const membershipId = this.dataset.membershipId;
-                        deleteMembershipForm.action = `{{ url('/membership') }}/${membershipId}`;
+                        deleteMembershipForm.action =
+                            `${window.location.origin}/membership/${membershipId}`;
                         deleteMembershipModal.classList.remove('hidden');
                     });
                 });

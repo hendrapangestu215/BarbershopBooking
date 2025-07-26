@@ -16,42 +16,42 @@ class ServiceSeeder extends Seeder
             [
                 'name' => 'Classic Haircut',
                 'description' => 'Traditional haircut with clippers and scissors',
-                'price' => 25.00,
+                'price' => 25000,
                 'duration' => 30,
                 'featured' => ['Consultation', 'Shampoo', 'Styling']
             ],
             [
                 'name' => 'Beard Trim',
                 'description' => 'Shape and trim your beard to perfection',
-                'price' => 15.00,
+                'price' => 15000,
                 'duration' => 20,
                 'featured' => ['Beard Wash', 'Hot Towel', 'Beard Oil']
             ],
             [
                 'name' => 'Premium Package',
                 'description' => 'Complete grooming experience',
-                'price' => 45.00,
+                'price' => 45000,
                 'duration' => 60,
                 'featured' => ['Haircut', 'Beard Trim', 'Hot Towel Treatment', 'Face Massage']
             ],
             [
                 'name' => 'Kid\'s Haircut',
                 'description' => 'Haircut for children under 12 years old',
-                'price' => 20.00,
+                'price' => 20000,
                 'duration' => 25,
                 'featured' => ['Child-friendly Environment', 'Gentle Approach', 'Fun Experience']
             ],
             [
                 'name' => 'Hot Towel Shave',
                 'description' => 'Traditional straight razor shave',
-                'price' => 30.00,
+                'price' => 30000,
                 'duration' => 30,
                 'featured' => ['Hot Towel Preparation', 'Premium Shaving Cream', 'After-Shave Treatment']
             ],
             [
                 'name' => 'Hair Coloring',
                 'description' => 'Professional hair coloring service',
-                'price' => 60.00,
+                'price' => 60000,
                 'duration' => 90,
                 'featured' => ['Consultation', 'Premium Color Products', 'Styling']
             ],

@@ -14,6 +14,57 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Production fallback that tries different versions of the assets -->
+    @production
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(function() {
+                    const testEl = document.createElement('div');
+                    testEl.className = 'hidden';
+                    document.body.appendChild(testEl);
+                    const styles = window.getComputedStyle(testEl);
+                    const tailwindLoaded = styles.display === 'none';
+                    document.body.removeChild(testEl);
+
+                    if (!tailwindLoaded) {
+                        console.log('Tailwind CSS not loaded, adding fallback stylesheets');
+
+                        // Try multiple possible filenames
+                        const cssFiles = [
+                            '{{ asset('build/assets/app-DXCnadYy.css') }}',
+                            '{{ asset('build/assets/app.css') }}'
+                        ];
+
+                        const jsFiles = [
+                            '{{ asset('build/assets/app-Bf4POITK.js') }}',
+                            '{{ asset('build/assets/app.js') }}'
+                        ];
+
+                        // Try to load CSS files
+                        let cssLoaded = false;
+                        for (let i = 0; i < cssFiles.length && !cssLoaded; i++) {
+                            const link = document.createElement('link');
+                            link.rel = 'stylesheet';
+                            link.href = cssFiles[i];
+                            document.head.appendChild(link);
+                            cssLoaded = true;
+                        }
+
+                        // Try to load JS files
+                        let jsLoaded = false;
+                        for (let i = 0; i < jsFiles.length && !jsLoaded; i++) {
+                            const script = document.createElement('script');
+                            script.type = 'module';
+                            script.src = jsFiles[i];
+                            document.body.appendChild(script);
+                            jsLoaded = true;
+                        }
+                    }
+                }, 500);
+            });
+        </script>
+    @endproduction
 </head>
 
 <body class="font-sans antialiased">

@@ -118,7 +118,7 @@
                             <div class="service-content flex-grow-1">
                                 <h4 class="fw-bold">{{ $service->name }}</h4>
                                 <p class="text-muted small">{{ $service->description }}</p>
-                                <div class="service-price">${{ $service->price }}</div>
+                                <div class="service-price">Rp{{ number_format($service->price, 0, ',', '.') }}</div>
                                 <div class="service-time">{{ $service->duration }} minutes</div>
 
                                 @if (is_array($service->featured))
@@ -170,8 +170,13 @@
                         <div class="hairstyle-card h-100">
                             <div class="hairstyle-image">
                                 @if ($hairstyle->image)
-                                    <img src="{{ asset('storage/' . $hairstyle->image) }}"
-                                        alt="{{ $hairstyle->name }}" class="img-fluid">
+                                    @if (filter_var($hairstyle->image, FILTER_VALIDATE_URL))
+                                        <img src="{{ $hairstyle->image }}" alt="{{ $hairstyle->name }}"
+                                            class="img-fluid">
+                                    @else
+                                        <img src="{{ asset('storage/' . $hairstyle->image) }}"
+                                            alt="{{ $hairstyle->name }}" class="img-fluid">
+                                    @endif
                                 @else
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         fill="#adb5bd" class="bi bi-image" viewBox="0 0 16 16">

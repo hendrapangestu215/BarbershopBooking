@@ -33,60 +33,68 @@
             <!-- Hairstyle grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($hairstyles as $hairstyle)
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-                        <div class="p-4">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden flex flex-col h-full">
+                        <div class="p-4 flex flex-col h-full">
                             <div
                                 class="mb-4 h-48 bg-gray-300 dark:bg-gray-700 rounded-md flex items-center justify-center overflow-hidden">
                                 @if ($hairstyle->image)
-                                    <img src="{{ asset('storage/' . $hairstyle->image) }}" alt="{{ $hairstyle->name }}"
-                                        class="w-full h-full object-cover">
+                                    @if (filter_var($hairstyle->image, FILTER_VALIDATE_URL))
+                                        <img src="{{ $hairstyle->image }}" alt="{{ $hairstyle->name }}"
+                                            class="w-full h-full object-cover">
+                                    @else
+                                        <img src="{{ asset('storage/' . $hairstyle->image) }}"
+                                            alt="{{ $hairstyle->name }}" class="w-full h-full object-cover">
+                                    @endif
                                 @else
                                     <div class="text-gray-500 dark:text-gray-400 text-center">No Image</div>
                                 @endif
                             </div>
-                            <h3 class="text-lg text-gray-900 dark:text-gray-100 font-bold">{{ $hairstyle->name }}</h3>
-                            <div class="flex items-center mb-2">
-                                @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <= $hairstyle->rating)
-                                        <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
-                                            <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                        </svg>
-                                    @else
-                                        <svg class="w-4 h-4 text-gray-300 dark:text-gray-600 fill-current"
+                            <div class="flex flex-col flex-grow">
+                                <h3 class="text-lg text-gray-900 dark:text-gray-100 font-bold">{{ $hairstyle->name }}
+                                </h3>
+                                <div class="flex items-center mb-2">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $hairstyle->rating)
+                                            <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                                                <path
+                                                    d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                            </svg>
+                                        @else
+                                            <svg class="w-4 h-4 text-gray-300 dark:text-gray-600 fill-current"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                            </svg>
+                                        @endif
+                                    @endfor
+                                    <span
+                                        class="ml-1 text-sm text-gray-700 dark:text-gray-300">{{ $hairstyle->rating }}</span>
+                                </div>
+                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-3 flex-grow">
+                                    {{ Str::limit($hairstyle->description, 100) }}</p>
+                                <div class="flex space-x-2 mt-auto">
+                                    <button type="button" data-hairstyle-id="{{ $hairstyle->id }}"
+                                        class="edit-hairstyle-btn text-[#00B4EB] px-3 py-1 border border-[#00B4EB] rounded-md hover:bg-blue-100 dark:hover:bg-opacity-20 flex items-center gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor"
                                             viewBox="0 0 20 20">
                                             <path
-                                                d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                                                d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                            <path fill-rule="evenodd"
+                                                d="M2 15.25V18h2.75l8.172-8.172-2.75-2.75L2 15.25zM4.414 17H3v-1.414l7.586-7.586 1.414 1.414L4.414 17z"
+                                                clip-rule="evenodd" />
                                         </svg>
-                                    @endif
-                                @endfor
-                                <span
-                                    class="ml-1 text-sm text-gray-700 dark:text-gray-300">{{ $hairstyle->rating }}</span>
-                            </div>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                                {{ Str::limit($hairstyle->description, 100) }}</p>
-                            <div class="flex space-x-2">
-                                <button type="button" data-hairstyle-id="{{ $hairstyle->id }}"
-                                    class="edit-hairstyle-btn text-[#00B4EB] px-3 py-1 border border-[#00B4EB] rounded-md hover:bg-blue-100 dark:hover:bg-opacity-20 flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor"
-                                        viewBox="0 0 20 20">
-                                        <path
-                                            d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                        <path fill-rule="evenodd"
-                                            d="M2 15.25V18h2.75l8.172-8.172-2.75-2.75L2 15.25zM4.414 17H3v-1.414l7.586-7.586 1.414 1.414L4.414 17z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                    Edit
-                                </button>
-                                <button type="button" data-hairstyle-id="{{ $hairstyle->id }}"
-                                    class="delete-hairstyle-btn text-[#FF2929] px-3 py-1 border border-[#FF2929] rounded-md hover:bg-red-100 dark:hover:bg-opacity-20 flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 7L5 7M10 11v6M14 11v6M6 7l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3" />
-                                    </svg>
-                                    Delete
-                                </button>
+                                        Edit
+                                    </button>
+                                    <button type="button" data-hairstyle-id="{{ $hairstyle->id }}"
+                                        class="delete-hairstyle-btn text-[#FF2929] px-3 py-1 border border-[#FF2929] rounded-md hover:bg-red-100 dark:hover:bg-opacity-20 flex items-center gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7L5 7M10 11v6M14 11v6M6 7l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3" />
+                                        </svg>
+                                        Delete
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -147,7 +155,8 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Image</label>
+                            <label
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Image</label>
                             <div class="flex items-center space-x-4">
                                 <div
                                     class="w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded flex items-center justify-center overflow-hidden">
@@ -360,8 +369,13 @@
                         const hairstyleId = this.dataset.hairstyleId;
 
                         // Fetch hairstyle data
-                        fetch(`{{ url('/hairstyle') }}/${hairstyleId}/edit`)
-                            .then(response => response.json())
+                        fetch(`${window.location.origin}/hairstyle/${hairstyleId}/edit`)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`HTTP error! Status: ${response.status}`);
+                                }
+                                return response.json();
+                            })
                             .then(data => {
                                 // Populate form
                                 document.getElementById('edit_hairstyle_id').value = data.id;
@@ -372,18 +386,28 @@
 
                                 // Update image preview
                                 if (data.image) {
-                                    editImagePreview.src = `/storage/${data.image}`;
+                                    if (data.image.startsWith('http://') || data.image.startsWith(
+                                            'https://')) {
+                                        // For external URLs
+                                        editImagePreview.src = data.image;
+                                    } else {
+                                        // For local storage paths
+                                        editImagePreview.src =
+                                            `{{ asset('storage') }}/${data.image}`;
+                                    }
                                     editImagePreview.classList.remove('hidden');
                                 }
 
                                 // Update form action URL
-                                editHairstyleForm.action = `{{ url('/hairstyle') }}/${data.id}`;
+                                editHairstyleForm.action =
+                                    `${window.location.origin}/hairstyle/${data.id}`;
 
                                 // Show modal
                                 editHairstyleModal.classList.remove('hidden');
                             })
                             .catch(error => {
                                 console.error('Error fetching hairstyle data:', error);
+                                alert('Failed to fetch hairstyle data: ' + error.message);
                             });
                     });
                 });
@@ -403,7 +427,8 @@
                 document.querySelectorAll('.delete-hairstyle-btn').forEach(button => {
                     button.addEventListener('click', function() {
                         const hairstyleId = this.dataset.hairstyleId;
-                        deleteHairstyleForm.action = `{{ url('/hairstyle') }}/${hairstyleId}`;
+                        deleteHairstyleForm.action =
+                            `${window.location.origin}/hairstyle/${hairstyleId}`;
                         deleteHairstyleModal.classList.remove('hidden');
                     });
                 });

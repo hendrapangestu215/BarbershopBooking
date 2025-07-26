@@ -60,7 +60,7 @@
                                     <p class="service-tit">{{ $service->name }}</p>
                                     <p class="service-desc">{{ $service->description }}</p>
                                     <div class="info">
-                                        <span class="price">${{ $service->price }}</span>
+                                        <span class="price">Rp{{ number_format($service->price, 0, ',', '.') }}</span>
                                         <span class="duration">🕒 {{ $service->duration }} min</span>
                                     </div>
                                 </div>

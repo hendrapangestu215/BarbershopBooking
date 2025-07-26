@@ -54,7 +54,7 @@ class HairstyleController extends Controller
 
         if ($request->hasFile('image')) {
             // Delete old image if exists
-            if ($hairstyle->image && Storage::disk('public')->exists($hairstyle->image)) {
+            if ($hairstyle->image && !filter_var($hairstyle->image, FILTER_VALIDATE_URL) && Storage::disk('public')->exists($hairstyle->image)) {
                 Storage::disk('public')->delete($hairstyle->image);
             }
 

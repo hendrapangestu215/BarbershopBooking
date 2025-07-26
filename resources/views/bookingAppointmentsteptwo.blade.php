@@ -67,8 +67,13 @@
                                     </div>
                                     <div class="hairstyles-image">
                                         @if ($hairstyle->image)
-                                            <img src="{{ asset('storage/' . $hairstyle->image) }}"
-                                                alt="{{ $hairstyle->name }}" class="w-100 h-100 object-cover">
+                                            @if (filter_var($hairstyle->image, FILTER_VALIDATE_URL))
+                                                <img src="{{ $hairstyle->image }}" alt="{{ $hairstyle->name }}"
+                                                    class="w-100 h-100 object-cover">
+                                            @else
+                                                <img src="{{ asset('storage/' . $hairstyle->image) }}"
+                                                    alt="{{ $hairstyle->name }}" class="w-100 h-100 object-cover">
+                                            @endif
                                         @else
                                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
                                                 fill="#adb5bd" class="bi bi-image" viewBox="0 0 16 16">

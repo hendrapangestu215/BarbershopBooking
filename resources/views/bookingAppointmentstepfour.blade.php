@@ -55,7 +55,7 @@
                 <div class="select-service">
                     <p class="service-tit">{{ $service->name }}</p>
                     <div class="info">
-                        <span class="price">${{ $service->price }}</span>
+                        <span class="price">Rp{{ number_format($service->price, 0, ',', '.') }}</span>
                         <span class="duration">🕒 {{ $service->duration }} min</span>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
                 </div>
                 <div class="booking-detail-row">
                     <div><strong>{{ $service->name }}</strong></div>
-                    <div><strong>${{ $service->price }}</strong></div>
+                    <div><strong>Rp{{ number_format($service->price, 0, ',', '.') }}</strong></div>
                 </div>
 
                 <div class="booking-detail-row">
@@ -222,7 +222,7 @@
 
                 <div class="mobile-booking-item">
                     <div class="mobile-label">Price</div>
-                    <div class="mobile-value">${{ $service->price }}</div>
+                    <div class="mobile-value">Rp{{ number_format($service->price, 0, ',', '.') }}</div>
                 </div>
 
                 <div class="mobile-booking-item">

@@ -178,7 +178,7 @@
 
                 <div class="detail-row">
                     <div class="detail-label">Price</div>
-                    <div class="detail-value">${{ $booking->service->price }}</div>
+                    <div class="detail-value">Rp{{ number_format($booking->service->price, 0, ',', '.') }}</div>
                 </div>
 
                 <div class="detail-row">

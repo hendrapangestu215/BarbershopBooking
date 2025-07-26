@@ -374,11 +374,17 @@
 
         function openEditModal(bookingId) {
             // Fetch booking data
-            fetch(`{{ url('/bookings') }}/${bookingId}/edit`)
-                .then(response => response.json())
+            fetch(`${window.location.origin}/bookings/${bookingId}/edit`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    // Set form action URL
-                    document.getElementById('editBookingForm').action = `{{ url('/bookings') }}/${bookingId}`;
+                    // Set form action URL 
+                    document.getElementById('editBookingForm').action =
+                        `${window.location.origin}/bookings/${bookingId}`;
 
                     // Populate form fields with booking data
                     document.getElementById('edit_user_id').value = data.user_id;
@@ -392,11 +398,14 @@
                     // Show the modal
                     toggleModal('editBookingModal');
                 })
-                .catch(error => console.error('Error fetching booking data:', error));
+                .catch(error => {
+                    console.error('Error fetching booking data:', error);
+                    alert('Failed to fetch booking data: ' + error.message);
+                });
         }
 
         function confirmDelete(bookingId) {
-            document.getElementById('deleteBookingForm').action = `{{ url('/bookings') }}/${bookingId}`;
+            document.getElementById('deleteBookingForm').action = `${window.location.origin}/bookings/${bookingId}`;
             toggleModal('deleteModal');
         }
     </script>

@@ -48,7 +48,8 @@
                                 class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm pl-2">
                                 <td class="py-3 pl-2 text-center text-gray-900 dark:text-gray-100">{{ $service->name }}
                                 </td>
-                                <td class="text-center text-gray-900 dark:text-gray-100">${{ $service->price }}</td>
+                                <td class="text-center text-gray-900 dark:text-gray-100">
+                                    Rp{{ number_format($service->price, 0, ',', '.') }}</td>
                                 <td class="text-center text-gray-900 dark:text-gray-100">{{ $service->description }}
                                 </td>
                                 <td class="text-center text-gray-900 dark:text-gray-100">
@@ -139,7 +140,7 @@
                                 <div>
                                     <label for="price"
                                         class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Price
-                                        ($)</label>
+                                        (Rp)</label>
                                     <input type="number" id="price" name="price" step="0.01" min="0"
                                         required
                                         class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
@@ -231,7 +232,7 @@
                                 <div>
                                     <label for="edit_price"
                                         class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Price
-                                        ($)</label>
+                                        (Rp)</label>
                                     <input type="number" id="edit_price" name="price" step="0.01"
                                         min="0" required
                                         class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
@@ -337,8 +338,13 @@
                         const serviceId = this.getAttribute('data-service-id');
 
                         // Fetch service data
-                        fetch(`{{ url('/services') }}/${serviceId}/edit`)
-                            .then(response => response.json())
+                        fetch(`${window.location.origin}/services/${serviceId}/edit`)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`HTTP error! Status: ${response.status}`);
+                                }
+                                return response.json();
+                            })
                             .then(service => {
                                 // Populate form fields
                                 document.getElementById('edit_name').value = service.name;
@@ -348,7 +354,8 @@
                                 document.getElementById('edit_duration').value = service.duration;
 
                                 // Set form action
-                                editServiceForm.action = `{{ url('/services') }}/${service.id}`;
+                                editServiceForm.action =
+                                    `${window.location.origin}/services/${service.id}`;
 
                                 // Clear and populate features
                                 editFeaturesContainer.innerHTML = '';
@@ -367,7 +374,10 @@
                                 // Show modal
                                 editServiceModal.classList.remove('hidden');
                             })
-                            .catch(error => console.error('Error:', error));
+                            .catch(error => {
+                                console.error('Error fetching service data:', error);
+                                alert('Failed to fetch service data: ' + error.message);
+                            });
                     });
                 });
 
@@ -375,7 +385,7 @@
                 document.querySelectorAll('.delete-service-btn').forEach(button => {
                     button.addEventListener('click', function() {
                         const serviceId = this.getAttribute('data-service-id');
-                        deleteServiceForm.action = `{{ url('/services') }}/${serviceId}`;
+                        deleteServiceForm.action = `${window.location.origin}/services/${serviceId}`;
                         deleteServiceModal.classList.remove('hidden');
                     });
                 });

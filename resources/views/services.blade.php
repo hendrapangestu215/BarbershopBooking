@@ -30,7 +30,7 @@
                             <div class="service-content">
                                 <h2 class="service-name">{{ $service->name }}</h2>
                                 <p class="service-description">{{ $service->description }}</p>
-                                <div class="service-price">${{ $service->price }}</div>
+                                <div class="service-price">Rp{{ number_format($service->price, 0, ',', '.') }}</div>
                                 <div class="service-duration">{{ $service->duration }} minutes</div>
 
                                 <div class="service-features">
