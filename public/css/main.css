@@ -1488,6 +1488,14 @@ input[type="date"],select {
     gap: 10px;
 }
 
+.time-card.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f1f1f1;
+    color: #999;
+    pointer-events: none;
+}
+
 .time-card {
     padding: 12px;
     border: 1px solid #dee2e6;

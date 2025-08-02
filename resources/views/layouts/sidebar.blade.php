@@ -84,6 +84,16 @@
                         </svg>
                         <span class="mx-3">{{ __('Manage Membership') }}</span>
                     </a>
+
+                    <a href="{{ route('admin.reports') }}"
+                        class="flex items-center px-6 py-3 mt-1 text-white {{ request()->routeIs('admin.reports') ? 'bg-gray-700' : '' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm1 2h8a1 1 0 011 1v5a1 1 0 01-1 1H6a1 1 0 01-1-1V7a1 1 0 011-1z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span class="mx-3">{{ __('Reports') }}</span>
+                    </a>
                 @endif
             </nav>
         </div>

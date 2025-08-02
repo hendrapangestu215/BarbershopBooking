@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\HairstyleController;
 use App\Http\Controllers\Admin\MembershipController as AdminMembershipController;
+use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\HairstyleCatalogController;
@@ -115,6 +116,10 @@ Route::middleware(['auth', 'adminMiddleware'])->group(function () {
     Route::get('/membership/{membership}/edit-data', [AdminMembershipController::class, 'editData'])->name('admin.membership.editData');
     Route::put('/membership/{membership}', [AdminMembershipController::class, 'update'])->name('admin.membership.update');
     Route::delete('/membership/{membership}', [AdminMembershipController::class, 'destroy'])->name('admin.membership.destroy');
+
+    // reports
+    Route::get('/reports', [AdminReportController::class, 'index'])->name('admin.reports');
+    Route::get('/reports/export', [AdminReportController::class, 'export'])->name('admin.reports.export');
 
     // admin profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

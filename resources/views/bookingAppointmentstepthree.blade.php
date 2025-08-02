@@ -109,6 +109,50 @@
                 document.getElementById('booking_time').value = time;
             }
 
+            // Function to update available time slots based on selected date
+            function updateAvailableTimeSlots() {
+                const selectedDate = document.getElementById('datePicker').value;
+                const today = new Date().toISOString().split('T')[0];
+                const currentTime = new Date();
+
+                document.querySelectorAll('.time-card').forEach(card => {
+                    // Reset all cards to enabled state
+                    card.classList.remove('disabled');
+                    card.onclick = function() {
+                        selectTime(card.textContent.trim());
+                    };
+
+                    // If today is selected, disable past time slots
+                    if (selectedDate === today) {
+                        const timeText = card.textContent.trim();
+                        const [timePart, period] = timeText.split(' ');
+                        const [hours, minutes] = timePart.split(':');
+
+                        // Create a new date object for the slot time on today's date
+                        const slotDate = new Date();
+
+                        // Parse hours properly
+                        let timeHours = parseInt(hours);
+                        if (period === 'PM' && timeHours !== 12) {
+                            timeHours += 12;
+                        } else if (period === 'AM' && timeHours === 12) {
+                            timeHours = 0;
+                        }
+
+                        // Set the hours and minutes for the slot time
+                        slotDate.setHours(timeHours, parseInt(minutes), 0, 0);
+
+                        // Disable ONLY if current time has already passed the slot time
+                        if (slotDate < currentTime) {
+                            card.classList.add('disabled');
+                            card.onclick = function(e) {
+                                e.preventDefault();
+                            };
+                        }
+                    }
+                });
+            }
+
             // Check if there's a previously selected date and time
             document.addEventListener('DOMContentLoaded', function() {
                 const selectedDate = "{{ session('booking.booking_date') ?? '' }}";
@@ -120,6 +164,12 @@
                 if (selectedTime) {
                     selectTime(selectedTime);
                 }
+
+                // Add event listener to date picker
+                document.getElementById('datePicker').addEventListener('change', updateAvailableTimeSlots);
+
+                // Initialize time slots based on current date selection
+                updateAvailableTimeSlots();
             });
         </script>
 

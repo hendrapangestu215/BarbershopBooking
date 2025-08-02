@@ -232,7 +232,7 @@
 
             <div class="buttons-container">
                 <a href="{{ route('home') }}" class="home-btn">Return to Home</a>
-                <a href="{{ route('dashboard') }}" class="dashboard-btn">Go to Dashboard</a>
+                {{-- <a href="{{ route('dashboard') }}" class="dashboard-btn">Go to Dashboard</a> --}}
             </div>
         </div>
     </div>
